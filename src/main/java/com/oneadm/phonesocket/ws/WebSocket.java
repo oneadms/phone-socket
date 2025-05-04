@@ -33,7 +33,7 @@ public class WebSocket {
     }
     @OnMessage
     public void onMessage(Session session,String message) {
-        session.getAsyncRemote().sendText(message);
+        sessions.forEach(s->s.getAsyncRemote().sendText(message));
     }
 
 
