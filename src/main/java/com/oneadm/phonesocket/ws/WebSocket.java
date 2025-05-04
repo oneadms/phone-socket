@@ -22,17 +22,19 @@ public class WebSocket {
 
     @OnOpen
     public void onOpen(Session session) {
-
+        log.info("打开会话,当前会话数量：{}", sessions.size());
         sessions.add(session);
     }
 
     @OnClose
-    public void onClose(Session session, @PathParam("userId") Integer userId) {
+    public void onClose(Session session) {
+        log.info("关闭会话,当前会话数量：{}", sessions.size());
         sessions.remove(session);
 
     }
     @OnMessage
     public void onMessage(Session session,String message) {
+        log.info("收到一条消息,当前会话数量：{}", sessions.size());
         sessions.forEach(s->s.getAsyncRemote().sendText(message));
     }
 
@@ -40,7 +42,7 @@ public class WebSocket {
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-
+        log.info("WebSocket异常,当前会话数量：{}", sessions.size());
         log.info("websocket error", throwable);
     }
 
