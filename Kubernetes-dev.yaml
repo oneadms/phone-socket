@@ -44,3 +44,28 @@ spec:
           ports:
             - containerPort: 8080
               name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: phone-socket
+  namespace: dev
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: traefik
+spec:
+  tls:
+    - secretName: phonesocket-tls
+      hosts:
+        - phonesocket.xckjj.com
+  rules:
+    - host: phonesocket.xckjj.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: phone-socket
+                port:
+                  number: 80
