@@ -18,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 @Slf4j
 public class WebSocket {
-    List<Session> sessions = new CopyOnWriteArrayList<>();
+    static List<Session> sessions = new CopyOnWriteArrayList<>();
 
     @OnOpen
     public void onOpen(Session session) {
