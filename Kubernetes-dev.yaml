@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: phone-socket
+  labels:
+    app: phone-socket
+spec:
+  ports:
+    - port: 80
+      targetPort: 8888
+  selector:
+    app: phone-socket
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phone-socket
+  labels:
+    app: phone-socket
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: phone-socket
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: phone-socket
+        version: v1
+    spec:
+      containers:
+        - image: oneadm/phone-socket:1.0
+          imagePullPolicy: Always
+          name: phone-socket
+          command: [ "/bin/sh", "-c", "env" ]
+          envFrom:
+            - configMapRef:
+                name: java-configmap
+            - configMapRef:
+                name: phone-socket
+          command: ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
+          ports:
+            - containerPort: 8888
+              name: http
