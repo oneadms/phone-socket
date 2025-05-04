@@ -7,7 +7,7 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: 8888
+      targetPort: 8080
   selector:
     app: phone-socket
   type: ClusterIP
@@ -42,5 +42,5 @@ spec:
                 name: phone-socket
           command: ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
           ports:
-            - containerPort: 8888
+            - containerPort: 8080
               name: http
