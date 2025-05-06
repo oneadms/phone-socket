@@ -44,6 +44,7 @@ public class WebSocket {
     public void onError(Session session, Throwable throwable) {
         log.info("WebSocket异常,当前会话数量：{}", sessions.size());
         log.info("websocket error", throwable);
+        //Do fuck mother
     }
 
 
